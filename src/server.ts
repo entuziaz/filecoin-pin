@@ -30,7 +30,6 @@ export async function startServer(): Promise<void> {
         logger.info('Received SIGINT, shutting down gracefully...')
         await server.close()
         await pinStore.stop()
-        process.exit(0)
       })()
     })
 
@@ -39,7 +38,6 @@ export async function startServer(): Promise<void> {
         logger.info('Received SIGTERM, shutting down gracefully...')
         await server.close()
         await pinStore.stop()
-        process.exit(0)
       })()
     })
 
@@ -65,7 +63,6 @@ export async function startServer(): Promise<void> {
       console.error('   Please set your private key: export PRIVATE_KEY=0x...')
       console.error('   Or run with: PRIVATE_KEY=0x... npm start\n')
     }
-
-    process.exit(1)
+    throw error
   }
 }

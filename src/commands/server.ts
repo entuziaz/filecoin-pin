@@ -16,28 +16,32 @@ addNetworkOptions(serverCommand)
     // default rpcUrl value is defined in ../common/get-rpc-url.ts
   )
   .action(async (options) => {
-    // Override environment variables with CLI options if provided
-    if (options.privateKey) {
-      process.env.PRIVATE_KEY = options.privateKey
-    }
-    // RPC URL takes precedence over network flag
-    if (options.rpcUrl) {
-      process.env.RPC_URL = options.rpcUrl
-    } else if (options.network) {
-      process.env.NETWORK = options.network
-    }
-    if (options.carStorage) {
-      process.env.CAR_STORAGE_PATH = options.carStorage
-    }
-    if (options.database) {
-      process.env.DATABASE_PATH = options.database
-    }
-    if (options.port) {
-      process.env.PORT = options.port
-    }
-    if (options.host) {
-      process.env.HOST = options.host
-    }
+    try {
+      // Override environment variables with CLI options if provided
+      if (options.privateKey) {
+        process.env.PRIVATE_KEY = options.privateKey
+      }
+      // RPC URL takes precedence over network flag
+      if (options.rpcUrl) {
+        process.env.RPC_URL = options.rpcUrl
+      } else if (options.network) {
+        process.env.NETWORK = options.network
+      }
+      if (options.carStorage) {
+        process.env.CAR_STORAGE_PATH = options.carStorage
+      }
+      if (options.database) {
+        process.env.DATABASE_PATH = options.database
+      }
+      if (options.port) {
+        process.env.PORT = options.port
+      }
+      if (options.host) {
+        process.env.HOST = options.host
+      }
 
-    await startServer()
+      await startServer()
+    } catch {
+      process.exit(1)
+    }
   })
